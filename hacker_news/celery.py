@@ -5,15 +5,15 @@ from django.conf import settings
 from celery.schedules import crontab
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE','core.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE','hacker_news.settings')
 
-app = Celery('core')
+app = Celery('hacker_news')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
 app.conf.beat_schedule = {
     "fetch latest news": {
         "task": "news.tasks.get_latest_news",
-        "schedule": crontab(minute="*/5")
+        "schedule": crontab(minute="*/20")
     },
     
 }
